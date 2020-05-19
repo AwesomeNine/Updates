@@ -1,10 +1,10 @@
 # Updates
 
 [![Awesome9](https://img.shields.io/badge/Awesome-9-brightgreen)](https://awesome9.co)
-[![Latest Stable Version](https://poser.pugx.org/awesome9/templates/v/stable)](https://packagist.org/packages/awesome9/templates)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/awesome9/templates.svg)](https://packagist.org/packages/awesome9/templates)
-[![Total Downloads](https://poser.pugx.org/awesome9/templates/downloads)](https://packagist.org/packages/awesome9/templates)
-[![License](https://poser.pugx.org/awesome9/templates/license)](https://packagist.org/packages/awesome9/templates)
+[![Latest Stable Version](https://poser.pugx.org/awesome9/updates/v/stable)](https://packagist.org/packages/awesome9/updates)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/awesome9/updates.svg)](https://packagist.org/packages/awesome9/updates)
+[![Total Downloads](https://poser.pugx.org/awesome9/updates/downloads)](https://packagist.org/packages/awesome9/updates)
+[![License](https://poser.pugx.org/awesome9/updates/license)](https://packagist.org/packages/awesome9/updates)
 
 <p align="center">
 	<img src="https://img.icons8.com/nolan/256/approve-and-update.png"/>
