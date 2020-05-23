@@ -49,6 +49,8 @@ class Updates {
 	 *
 	 * Ensure only one instance is loaded or can be loaded.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return Updates
 	 */
 	public static function get() {
@@ -116,7 +118,7 @@ class Updates {
 	}
 
 	/**
-	 * Set version option name.
+	 * Set plugin option name.
 	 *
 	 * @since  1.0.0
 	 *
@@ -144,7 +146,7 @@ class Updates {
 	/**
 	 * Check if need any update
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
 	public function do_updates() {
 		if ( ! current_user_can( 'update_plugins' ) ) {
@@ -167,7 +169,7 @@ class Updates {
 	/**
 	 * Perform all updates
 	 *
-	 * @since 1.0
+	 * @since 1.0.0
 	 */
 	public function perform_updates() {
 		$installed_version = get_option( $this->option_name );
@@ -184,6 +186,8 @@ class Updates {
 
 	/**
 	 * Save version info.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param  string $version Version number to save.
 	 */

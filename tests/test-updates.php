@@ -19,7 +19,7 @@ class TestUpdates extends \WP_UnitTestCase {
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function test_should_throw_if_vars_not_array_exception() {
+	public function test_should_throw_if_config_not_set_exception() {
 		Updates::get()
 			->hooks();
 	}

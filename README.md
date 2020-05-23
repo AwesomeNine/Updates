@@ -22,7 +22,7 @@ composer require awesome9/updates
 
 ## 🕹 Usage
 
-First, you need to spin out configuratio for your updates.
+First, you need to spin out configuration for your updates.
 
 ```php
 Awesome9\Updates\Updates::get()
