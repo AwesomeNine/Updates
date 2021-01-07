@@ -19,7 +19,7 @@ class Updates {
 	/**
 	 * Updates that need to be run.
 	 *
-	 * @var string
+	 * @var array
 	 */
 	private $updates = array();
 
