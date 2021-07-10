@@ -21,7 +21,7 @@ class Updates {
 	 *
 	 * @var array
 	 */
-	private $updates = array();
+	private $updates = [];
 
 	/**
 	 * Folder path.
@@ -87,7 +87,7 @@ class Updates {
 			throw new InvalidArgumentException( 'Please set option name to save version in database.' );
 		}
 
-		add_action( 'admin_init', array( $this, 'do_updates' ) );
+		add_action( 'admin_init', [ $this, 'do_updates' ] );
 		return $this;
 	}
 
