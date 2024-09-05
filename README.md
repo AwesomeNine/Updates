@@ -12,7 +12,9 @@
 
 ## 📃 About Updates
 
-This package provides ease of running update routines within a plugin.
+This  .
+This package provides ease of running update routines within a WordPress plugin. It provides methods to check the current installed version of the plugin, determine which updates need to be applied, and apply those updates in order.
+
 
 ## 💾 Installation
 
@@ -22,25 +24,41 @@ composer require awesome9/updates
 
 ## 🕹 Usage
 
-First, you need to spin out configuration for your updates.
+First, you need to create a concrete class that extends `Updates`.
+
+You will need to create a new class that extends the `Updates` class and implements the abstract methods.
 
 ```php
-Awesome9\Updates\Updates::get()
-	->set_folder( dirname( __FILE__ ) . '/updates' ) // Directory where you store your update routine files.
-	->set_version( '1.0.0' )                         // Your plugin version.
-	->set_option_name( 'awesome9_plugin_version' );  // Option name to store version number in database.
+use Awesome9\Updates\Updates;
+
+class MyPluginUpdates extends Updates {
+
+    public function get_updates(): array {
+        return [
+            '1.0.1' => '/updates/update-1.0.1.php',
+            '1.0.2' => '/updates/update-1.0.2.php',
+        ];
+    }
+
+    public function get_folder(): string {
+        return plugin_dir_path( __FILE__ ) . 'updates/';
+    }
+
+    public function get_version(): string {
+        return '1.0.2'; // Replace with your plugin's current version
+    }
+
+    public function get_option_name(): string {
+        return 'awesome9_plugin_version'; // Option name to store the version in the database
+    }
+}
 ```
 
-Now, let's add some updates routines we want to run.
+Now, in your plugin's main file, initialize the updates manager and bind the hooks:
 
 ```php
-Awesome9\Updates\Updates::get()
-	->add_updates(
-		array(
-			'1.1.0' => 'update-1.1.0.php',
-			'1.1.1' => 'update-1.1.1.php',
-		)
-	);
+$my_plugin_updates = new MyPluginUpdates();
+$my_plugin_updates->hooks();
 ```
 
 Let's assume your plugin tree looks like this:
