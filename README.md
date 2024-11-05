@@ -12,7 +12,6 @@
 
 ## 📃 About Updates
 
-This  .
 This package provides ease of running update routines within a WordPress plugin. It provides methods to check the current installed version of the plugin, determine which updates need to be applied, and apply those updates in order.
 
 
@@ -24,44 +23,73 @@ composer require awesome9/updates
 
 ## 🕹 Usage
 
-First, you need to create a concrete class that extends `Updates`.
+### Step 1: Implement the `Updates` Class
 
-You will need to create a new class that extends the `Updates` class and implements the abstract methods.
+To use the package, create a class that extends the `Updates` abstract class. Implement the following methods in your custom class:
+
+- `get_updates()` - Returns an associative array of version numbers and update file paths.
+- `get_folder()` - Returns the folder path where update files are stored.
+- `get_version()` - Returns the current plugin version.
+- `get_option_name()` - Returns the option name used to store the plugin version in the database.
 
 ```php
 use Awesome9\Updates\Updates;
 
 class MyPluginUpdates extends Updates {
 
+    /**
+     * Define update versions and file paths.
+     *
+     * @return array<string, string>
+     */
     public function get_updates(): array {
         return [
-            '1.0.1' => '/updates/update-1.0.1.php',
-            '1.0.2' => '/updates/update-1.0.2.php',
+            '1.0.1' => 'updates/update-1.0.1.php',
+            '1.0.2' => 'updates/update-1.0.2.php',
         ];
     }
 
+    /**
+     * Specify the updates folder path.
+     *
+     * @return string
+     */
     public function get_folder(): string {
         return plugin_dir_path( __FILE__ ) . 'updates/';
     }
 
+    /**
+     * Get the current plugin version.
+     *
+     * @return string
+     */
     public function get_version(): string {
         return '1.0.2'; // Replace with your plugin's current version
     }
 
+    /**
+     * Define the database option name for storing the plugin version.
+     *
+     * @return string
+     */
     public function get_option_name(): string {
-        return 'awesome9_plugin_version'; // Option name to store the version in the database
+        return 'awesome9_plugin_version';
     }
 }
 ```
 
-Now, in your plugin's main file, initialize the updates manager and bind the hooks:
+### Step 2: Initialize and Bind Hooks
+
+In your plugin’s main file, instantiate your `MyPluginUpdates` class and bind the hooks to handle updates automatically:
 
 ```php
 $my_plugin_updates = new MyPluginUpdates();
 $my_plugin_updates->hooks();
 ```
 
-Let's assume your plugin tree looks like this:
+### Step 3: Structure Your Plugin’s Update Files
+
+Arrange your plugin folder to include separate files for each update version. Your folder structure might look like this:
 
 ```
 my-plugin/
@@ -70,30 +98,30 @@ my-plugin/
    └── update-1.1.1.php
 ```
 
-The update file could look like this:
+### Step 4: Write Update Files
+
+Each update file should contain code for the specific update, like this example for `update-1.0.1.php`:
 
 ```php
 <?php
 /**
- * Update routine
+ * Update routine for version 1.0.1
  *
- * @since 1.1.0
+ * @since 1.0.1
  */
 
 /**
- * Update new roles and capabilities
+ * Example update function to remove obsolete roles.
  *
- * @since 1.1.0
- *
+ * @since 1.0.1
  * @return void
  */
-function awesome9_update_1_1_0_remove_role() {
+function awesome9_update_1_0_1_remove_roles() {
 	remove_role( 'awesome9_manager' );
 	remove_role( 'awesome9_employee' );
 }
 
-awesome9_update_1_1_0_remove_role();
-
+awesome9_update_1_0_1_remove_roles();
 ```
 
 ## 📖 Changelog

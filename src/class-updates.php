@@ -17,7 +17,19 @@ use InvalidArgumentException;
 abstract class Updates {
 
 	/**
-	 * Get updates that need to run.
+	 * Get the list of updates that need to run.
+	 *
+	 * This method should return an associative array where each key is a version
+	 * number (as a string) and each value is the path to the update file relative
+	 * to the updates folder. The version number represents the minimum plugin
+	 * version required for the update, and the file contains the logic to execute
+	 * for that update.
+	 *
+	 * Example return value:
+	 * [
+	 *     '1.0.1' => 'updates/update-1.0.1.php',
+	 *     '1.0.2' => 'updates/update-1.0.2.php',
+	 * ]
 	 *
 	 * @since 1.0.0
 	 *
@@ -80,6 +92,17 @@ abstract class Updates {
 	}
 
 	/**
+	 * Get installed version number
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	public function get_installed_version(): string {
+		return get_option( $this->get_option_name(), '0' );
+	}
+
+	/**
 	 * Check if need any update
 	 *
 	 * @since 1.0.0
@@ -91,7 +114,7 @@ abstract class Updates {
 			return;
 		}
 
-		$installed_version = get_option( $this->get_option_name() );
+		$installed_version = $this->get_installed_version();
 
 		// Maybe it's the first install.
 		if ( ! $installed_version ) {
@@ -112,11 +135,17 @@ abstract class Updates {
 	 * @return void
 	 */
 	public function perform_updates(): void {
-		$installed_version = get_option( $this->get_option_name() );
+		$installed_version = $this->get_installed_version();
 
 		foreach ( $this->get_updates() as $version => $path ) {
 			if ( version_compare( $installed_version, $version, '<' ) ) {
-				include $this->get_folder() . $path;
+				$file_path = $this->get_folder() . $path;
+				if ( ! file_exists( $file_path ) ) {
+					error_log( "Update file {$file_path} not found." ); // phpcs:ignore
+					continue;
+				}
+
+				include_once $file_path;
 				$this->save_version( $version );
 			}
 		}
